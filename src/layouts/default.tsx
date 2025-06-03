@@ -15,15 +15,15 @@ export default function DefaultLayout({
       <main className="container mx-auto max-w-7xl px-6 flex-grow pt-8">
         {children}
       </main>
-      <footer className="w-full flex items-center justify-center py-3">
+      <footer className="w-full flex items-center justify-center py-3 ">
         <Link
           isExternal
           className="flex items-center gap-1 text-current"
           href="https://github.com/d3vShoaib"
           title="heroui.com homepage"
         >
-          <span className="text-default-600">Built with ❤️ by</span>
-          <p className="text-primary">Shoaib </p>
+          <span className="text-white opacity-60">Built with ❤️ by</span>
+          <p className="text-[color:#7FA8AE]">Shoaib </p>
         </Link>
       </footer>
     </div>

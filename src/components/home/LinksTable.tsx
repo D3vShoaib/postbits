@@ -6,10 +6,9 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  User,
-  Chip,
   Tooltip,
 } from "@heroui/react";
+import AvatarStack from "./AvatarStack";
 
 // Type definitions
 interface Column {
@@ -17,18 +16,14 @@ interface Column {
   uid: string;
 }
 
-interface UserData {
+interface LinkData {
   id: number;
-  name: string;
-  role: string;
-  team: string;
-  status: "active" | "paused" | "vacation";
-  age: string;
-  avatar: string;
-  email: string;
+  link: string;
+  title: string;
+  usedBy: { name: string; avatar: string }[];
 }
 
-type ColumnKey = "name" | "role" | "status" | "actions";
+type ColumnKey = "link" | "usedBy" | "actions";
 
 interface IconProps {
   className?: string;
@@ -37,97 +32,172 @@ interface IconProps {
 
 // Column configuration
 export const columns: Column[] = [
-  { name: "NAME", uid: "name" },
-  { name: "ROLE", uid: "role" },
-  { name: "STATUS", uid: "status" },
+  { name: "LINKS", uid: "link" },
+  { name: "USED BY", uid: "usedBy" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-// User data
-export const users: UserData[] = [
+// Link data
+export const links: LinkData[] = [
   {
     id: 1,
-    name: "Tony Reichert",
-    role: "CEO",
-    team: "Management",
-    status: "active",
-    age: "29",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    email: "tony.reichert@example.com",
+    link: "https://www.google.com",
+    title: "Google Search",
+    usedBy: [
+      {
+        name: "User1",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+      },
+      {
+        name: "User2",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+      },
+      {
+        name: "User3",
+        avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+      },
+      {
+        name: "User4",
+        avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+      },
+    ],
   },
   {
     id: 2,
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    team: "Development",
-    status: "paused",
-    age: "25",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "zoey.lang@example.com",
+    link: "https://www.facebook.com",
+    title: "Facebook",
+    usedBy: [
+      {
+        name: "User5",
+        avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
+      },
+      {
+        name: "User6",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+      },
+    ],
   },
   {
     id: 3,
-    name: "Jane Fisher",
-    role: "Senior Developer",
-    team: "Development",
-    status: "active",
-    age: "22",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    email: "jane.fisher@example.com",
+    link: "https://www.github.com",
+    title: "GitHub",
+    usedBy: [
+      {
+        name: "User7",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+      },
+      {
+        name: "User8",
+        avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+      },
+      {
+        name: "User9",
+        avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+      },
+    ],
   },
   {
     id: 4,
-    name: "William Howard",
-    role: "Community Manager",
-    team: "Marketing",
-    status: "vacation",
-    age: "28",
-    avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    email: "william.howard@example.com",
+    link: "https://www.youtube.com",
+    title: "YouTube",
+    usedBy: [
+      {
+        name: "User10",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026710d",
+      },
+      {
+        name: "User11",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026711d",
+      },
+      {
+        name: "User12",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026712d",
+      },
+      {
+        name: "User13",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026713d",
+      },
+      {
+        name: "User14",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026714d",
+      },
+    ],
   },
   {
     id: 5,
-    name: "Kristen Copper",
-    role: "Sales Manager",
-    team: "Sales",
-    status: "active",
-    age: "24",
-    avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
-    email: "kristen.cooper@example.com",
+    link: "https://www.reddit.com",
+    title: "Reddit",
+    usedBy: [
+      {
+        name: "User15",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026715d",
+      },
+      {
+        name: "User16",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026716d",
+      },
+    ],
+  },
+  {
+    id: 6,
+    link: "https://www.linkedin.com",
+    title: "LinkedIn",
+    usedBy: [
+      {
+        name: "User17",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026717d",
+      },
+      {
+        name: "User18",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026718d",
+      },
+      {
+        name: "User19",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026719d",
+      },
+    ],
+  },
+  {
+    id: 7,
+    link: "https://www.twitter.com",
+    title: "Twitter",
+    usedBy: [
+      {
+        name: "User20",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026720d",
+      },
+      {
+        name: "User21",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026721d",
+      },
+      {
+        name: "User22",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026722d",
+      },
+      {
+        name: "User23",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026723d",
+      },
+    ],
+  },
+  {
+    id: 8,
+    link: "https://www.instagram.com",
+    title: "Instagram",
+    usedBy: [
+      {
+        name: "User24",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026724d",
+      },
+      {
+        name: "User25",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026725d",
+      },
+    ],
   },
 ];
 
 // Icon components
-export const EyeIcon: React.FC<IconProps> = (props) => {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      focusable="false"
-      height="1em"
-      role="presentation"
-      viewBox="0 0 20 20"
-      width="1em"
-      {...props}
-    >
-      <path
-        d="M12.9833 10C12.9833 11.65 11.65 12.9833 10 12.9833C8.35 12.9833 7.01666 11.65 7.01666 10C7.01666 8.35 8.35 7.01666 10 7.01666C11.65 7.01666 12.9833 8.35 12.9833 10Z"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-      />
-      <path
-        d="M9.99999 16.8916C12.9417 16.8916 15.6833 15.1583 17.5917 12.1583C18.3417 10.9833 18.3417 9.00831 17.5917 7.83331C15.6833 4.83331 12.9417 3.09998 9.99999 3.09998C7.05833 3.09998 4.31666 4.83331 2.40833 7.83331C1.65833 9.00831 1.65833 10.9833 2.40833 12.1583C4.31666 15.1583 7.05833 16.8916 9.99999 16.8916Z"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-      />
-    </svg>
-  );
-};
-
 export const DeleteIcon: React.FC<IconProps> = (props) => {
   return (
     <svg
@@ -219,67 +289,43 @@ export const EditIcon: React.FC<IconProps> = (props) => {
   );
 };
 
-// Status color mLinksTableing
-const statusColorMap: Record<
-  UserData["status"],
-  "success" | "danger" | "warning"
-> = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
-
 // Main component
 function LinksTable() {
   const renderCell = React.useCallback(
-    (user: UserData, columnKey: React.Key): React.ReactNode => {
-      const cellValue = user[columnKey as keyof UserData];
-
+    (link: LinkData, columnKey: React.Key): React.ReactNode => {
       switch (columnKey as ColumnKey) {
-        case "name":
+        case "link":
           return (
-            <User
-              avatarProps={{ radius: "lg", src: user.avatar }}
-              description={user.email}
-              name={user.name}
-            >
-              {user.email}
-            </User>
-          );
-        case "role":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">{user.role}</p>
-              <p className="text-bold text-sm capitalize text-default-400">
-                {user.team}
-              </p>
+            <div className="flex flex-col min-w-0">
+              <span
+                className="font-semibold text-xs md:text-sm truncate max-w-[120px] md:max-w-[180px]"
+                title={link.title}
+              >
+                {link.title}
+              </span>
+              <a
+                href={link.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs md:text-sm text-default-400 truncate max-w-[140px] md:max-w-[200px] hover:underline"
+                title={link.link}
+              >
+                {link.link}
+              </a>
             </div>
           );
-        case "status":
-          return (
-            <Chip
-              className="capitalize"
-              color={statusColorMap[user.status]}
-              size="sm"
-              variant="flat"
-            >
-              {user.status}
-            </Chip>
-          );
+        case "usedBy":
+          return <AvatarStack users={link.usedBy} />;
         case "actions":
           return (
-            <div className="relative flex items-center gap-2">
-              <Tooltip content="Details">
-                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                  <EyeIcon />
-                </span>
-              </Tooltip>
-              <Tooltip content="Edit user">
+            <div className="relative flex gap-3">
+              {/* Removed EyeIcon (view icon) */}
+              <Tooltip content="Edit link">
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <EditIcon />
                 </span>
               </Tooltip>
-              <Tooltip color="danger" content="Delete user">
+              <Tooltip color="danger" content="Delete link">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
                   <DeleteIcon />
                 </span>
@@ -287,34 +333,48 @@ function LinksTable() {
             </div>
           );
         default:
-          return cellValue as React.ReactNode;
+          return null;
       }
     },
     []
   );
 
   return (
-    <Table aria-label="Example table with custom cells">
-      <TableHeader columns={columns}>
-        {(column: Column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={users}>
-        {(item: UserData) => (
-          <TableRow key={item.id}>
-            {(columnKey: React.Key) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+    <div className="overflow-x-auto w-full">
+      <div className="w-full min-w-[340px] md:min-w-0">
+        <Table
+          aria-label="Links table with custom cells"
+          className="w-full text-xs md:text-sm"
+        >
+          <TableHeader columns={columns}>
+            {(column: Column) => (
+              <TableColumn key={column.uid}>{column.name}</TableColumn>
             )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          </TableHeader>
+          <TableBody items={links}>
+            {(item: LinkData) => (
+              <TableRow key={item.id}>
+                {(columnKey: React.Key) => (
+                  <TableCell
+                    className={
+                      columnKey === "actions"
+                        ? "w-10 md:w-12 text-center px-1" // reduced width
+                        : columnKey === "usedBy"
+                          ? "w-28 md:w-32 px-1"
+                          : columnKey === "link"
+                            ? "px-1 w-40 md:w-48 lg:w-56 xl:w-64 2xl:w-72 max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-[200px]"
+                            : "px-1"
+                    }
+                  >
+                    {renderCell(item, columnKey)}
+                  </TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   );
 }
 

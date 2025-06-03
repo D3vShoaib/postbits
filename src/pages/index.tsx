@@ -9,7 +9,7 @@ export default function IndexPage() {
       <div className="relative z-10 flex flex-col items-center justify-center  text-center overflow-hidden">
         <div className="w-full max-w-2xl flex flex-col gap-5 items-center justify-center">
           <div>
-            <h1 className="text-5xl md:text-6xl leading-tight text-white">
+            <h1 className="text-4xl md:text-6xl leading-tight text-white">
               Any Link to a click
               <br />
               <span className="font-serif font-bold italic text-[#7fa8ae]">
