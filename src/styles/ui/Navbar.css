@@ -1,10 +1,10 @@
 .navbar-curved {
   position: relative;
   border-radius: 0 0 1.5rem 1.5rem !important;
-  background-color: rgba(15, 16, 30, 0.85) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(167, 239, 255, 0.3);
   border-top: none;
   z-index: 100;
   margin: 0 auto;
