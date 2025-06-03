@@ -291,6 +291,37 @@ export const EditIcon: React.FC<IconProps> = (props) => {
 
 // Main component
 function LinksTable() {
+  // Add inline styles for custom scrollbar
+  React.useEffect(() => {
+    // Create style element for custom scrollbar
+    const styleEl = document.createElement("style");
+    styleEl.textContent = `
+      .thin-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      
+      .thin-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      .thin-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 20px;
+      }
+      
+      .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(155, 155, 155, 0.7);
+      }
+    `;
+    document.head.appendChild(styleEl);
+    
+    // Cleanup on unmount
+    return () => {
+      document.head.removeChild(styleEl);
+    };
+  }, []);
+
   const renderCell = React.useCallback(
     (link: LinkData, columnKey: React.Key): React.ReactNode => {
       switch (columnKey as ColumnKey) {
@@ -338,32 +369,48 @@ function LinksTable() {
     },
     []
   );
-
   return (
-    <div className="overflow-x-auto w-full">
-      <div className="w-full min-w-[340px] md:min-w-0">
-        <Table
-          aria-label="Links table with custom cells"
+    <div className="w-full min-w-[340px] md:min-w-0">
+      <div className="relative">
+        <Table          aria-label="Links table with custom cells"
           className="w-full text-xs md:text-sm"
+          classNames={{
+            wrapper: "max-h-[448px] overflow-y-auto overflow-x-hidden thin-scrollbar",
+            thead: "sticky top-0 z-10 ",
+            th: "bg-default-100 text-tiny font-semibold text-default-600 uppercase tracking-wide",
+            tr: "hover:bg-default-50 transition-colors",
+          }}
         >
           <TableHeader columns={columns}>
             {(column: Column) => (
-              <TableColumn key={column.uid}>{column.name}</TableColumn>
+              <TableColumn
+                key={column.uid}
+                className={
+                  column.uid === "actions"
+                    ? "w-20 md:w-24 text-center"
+                    : column.uid === "usedBy"
+                      ? "w-32 md:w-36"
+                      : column.uid === "link"
+                        ? "flex-1"
+                        : ""
+                }
+              >
+                {column.name}
+              </TableColumn>
             )}
           </TableHeader>
           <TableBody items={links}>
             {(item: LinkData) => (
               <TableRow key={item.id}>
-                {(columnKey: React.Key) => (
-                  <TableCell
+                {(columnKey: React.Key) => (                  <TableCell
                     className={
                       columnKey === "actions"
-                        ? "w-10 md:w-12 text-center px-1" // reduced width
+                        ? "w-20 md:w-24 text-center px-3 py-4"
                         : columnKey === "usedBy"
-                          ? "w-28 md:w-32 px-1"
-                          : columnKey === "link"
-                            ? "px-1 w-40 md:w-48 lg:w-56 xl:w-64 2xl:w-72 max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-[200px]"
-                            : "px-1"
+                        ? "w-32 md:w-36 px-3 py-4"
+                        : columnKey === "link"
+                        ? "flex-1 px-3 py-4"
+                        : "px-3 py-4"
                     }
                   >
                     {renderCell(item, columnKey)}
