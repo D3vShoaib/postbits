@@ -10,7 +10,7 @@ export interface Post {
 }
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: "https://pc-back-production.up.railway.app/api",
   headers: {
     "Content-Type": "application/json",
   },

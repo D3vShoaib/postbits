@@ -4,7 +4,28 @@ import { Input } from "@heroui/input";
 import { LinkIcon } from "@/components/icons";
 import LinksTable from "@/components/home/LinksTable";
 import FadeContent from "@/components/ui/reactbits/FadeContent";
-export default function IndexPage() {
+import { useState } from "react";
+import { addLink } from "@/services/backend/post-manager";
+import { useNotifier, NotifierProvider } from "@/components/ui/Notifier";
+
+function IndexPage() {
+  const [input, setInput] = useState("");
+  const { notify } = useNotifier();
+
+  const handleAddLink = async () => {
+    if (!input.trim()) {
+      notify("Please enter a link.", "warning");
+      return;
+    }
+    try {
+      await addLink(input);
+      notify("Link added successfully!", "success");
+      setInput("");
+    } catch (e) {
+      notify("Failed to add link.", "danger");
+    }
+  };
+
   return (
     <DefaultLayout>
       <FadeContent
@@ -33,12 +54,23 @@ export default function IndexPage() {
 
             <Input
               isClearable
-              onClear={() => console.log("input cleared")}
+              value={input}
+              onValueChange={setInput}
+              onClear={() => setInput("")}
               placeholder="Enter your link"
               startContent={<LinkIcon className="text-default-400" />}
               variant="bordered"
               className="w-full"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleAddLink();
+              }}
             />
+            <button
+              className="mt-2 px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700 transition"
+              onClick={handleAddLink}
+            >
+              Add Link
+            </button>
             <div className="w-full">
               <LinksTable />
             </div>
@@ -57,3 +89,14 @@ export default function IndexPage() {
     </DefaultLayout>
   );
 }
+
+// Wrap the page with NotifierProvider
+export function PageWithNotifier() {
+  return (
+    <NotifierProvider>
+      <IndexPage />
+    </NotifierProvider>
+  );
+}
+
+export default PageWithNotifier;
