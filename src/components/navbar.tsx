@@ -11,8 +11,6 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 // import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, GithubIcon, DiscordIcon } from "@/components/icons";
-import { Logo } from "@/components/icons";
-
 import "@/styles/ui/Navbar.css";
 
 export const Navbar = () => {
@@ -25,7 +23,7 @@ export const Navbar = () => {
             color="foreground"
             href="/"
           >
-            <Logo />
+            <img src="/logo-cropped.svg" alt="PostBits Logo" className="h-6 w-6 mr-2" />
             <p className="font-bold text-inherit">PostBits</p>
           </Link>
         </NavbarBrand>

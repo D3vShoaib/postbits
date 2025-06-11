@@ -32,6 +32,8 @@ export default function IndexPage() {
             </div>
 
             <Input
+              isClearable
+              onClear={() => console.log("input cleared")}
               placeholder="Enter your link"
               startContent={<LinkIcon className="text-default-400" />}
               variant="bordered"
