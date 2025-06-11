@@ -3,25 +3,57 @@ import Aurora from "@/components/ui/Aurora";
 import { Input } from "@heroui/input";
 import { LinkIcon } from "@/components/icons";
 import LinksTable from "@/components/home/LinksTable";
+import BlurReveal from "../components/ui/reactbits/blur-reveal/BlurReveal";
+
 export default function IndexPage() {
   return (
     <DefaultLayout>
       <div className="relative z-10 flex flex-col items-center justify-center  text-center overflow-hidden">
         <div className="w-full max-w-2xl flex flex-col gap-5 items-center justify-center">
-          <div>
-            <h1 className="text-4xl md:text-6xl leading-tight text-white">
+          <h1 className="text-4xl md:text-6xl leading-tight text-white">
+            <BlurReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              staggerAmount={0.1}
+            >
               Any Link to a click
-              <br />
-              <span className="font-serif font-bold italic text-[#7fa8ae]">
+            </BlurReveal>
+            <br />
+            <span className="font-serif font-bold  italic text-[#7fa8ae]">
+              <BlurReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={5}
+                blurStrength={10}
+                staggerAmount={0.12}
+              >
                 worthy{" "}
-              </span>
+              </BlurReveal>
+            </span>
+            <BlurReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              staggerAmount={0.12}
+            >
               Post Instantly.
-            </h1>
-            <p className="mt-4 text-lg md:text-xl text-gray-300 font-light">
+            </BlurReveal>
+          </h1>
+          <p className="mt-4 text-lg md:text-xl text-gray-300 font-light">
+            <BlurReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              wordAnimationEnd="bottom bottom-=10%"
+              staggerAmount={0.05}
+            >
               Paste a link, get a crisp post with an image tailored for you.
-            </p>
-          </div>
-
+            </BlurReveal>
+          </p>
           <Input
             placeholder="Enter your link"
             startContent={<LinkIcon className="text-default-400" />}
