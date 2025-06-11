@@ -7,9 +7,12 @@ import FadeContent from "@/components/ui/reactbits/FadeContent";
 import { useState } from "react";
 import { addLink } from "@/services/backend/post-manager";
 import { useNotifier, NotifierProvider } from "@/components/ui/Notifier";
+import { Button } from "@heroui/react";
+import { Forward } from "lucide-react";
 
 function IndexPage() {
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const { notify } = useNotifier();
 
   const handleAddLink = async () => {
@@ -17,12 +20,15 @@ function IndexPage() {
       notify("Please enter a link.", "warning");
       return;
     }
+    setLoading(true);
     try {
       await addLink(input);
       notify("Link added successfully!", "success");
       setInput("");
     } catch (e) {
       notify("Failed to add link.", "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +58,7 @@ function IndexPage() {
               </p>
             </div>
 
+            <div className="w-full max-w-2xl flex items-center gap-2">
             <Input
               isClearable
               value={input}
@@ -65,12 +72,17 @@ function IndexPage() {
                 if (e.key === "Enter") handleAddLink();
               }}
             />
-            <button
-              className="mt-2 px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700 transition"
-              onClick={handleAddLink}
-            >
-              Add Link
-            </button>
+              <Button
+                isIconOnly
+                aria-label="Add Link"
+                color="default"
+                onClick={handleAddLink}
+                isLoading={loading}
+                disabled={loading}
+              >
+                <Forward />
+              </Button>
+            </div>
             <div className="w-full">
               <LinksTable />
             </div>
