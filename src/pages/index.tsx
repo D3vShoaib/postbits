@@ -27,7 +27,7 @@ export default function IndexPage() {
                 enableBlur={true}
                 baseRotation={5}
                 blurStrength={10}
-                staggerAmount={0.12}
+                staggerAmount={0.4}
               >
                 worthy{" "}
               </BlurReveal>
@@ -37,7 +37,7 @@ export default function IndexPage() {
               enableBlur={true}
               baseRotation={5}
               blurStrength={10}
-              staggerAmount={0.12}
+              staggerAmount={0.6}
             >
               Post Instantly.
             </BlurReveal>
