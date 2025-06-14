@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles for color input */
+@layer base {
+  input[type="color"] {
+    -webkit-appearance: none; /* For WebKit browsers (Chrome, Safari, Edge) */
+    -moz-appearance: none; /* For Firefox */
+    appearance: none; /* Standard property */
+    background-color: transparent; /* Ensure background is transparent before setting via inline style */
+    border: none; /* Remove default border */
+    outline: none; /* Remove focus outline */
+    box-shadow: none; /* Remove any default shadow */
+    padding: 0; /* Remove default padding */
+    cursor: pointer; /* Indicate it's clickable */
+  }
+}

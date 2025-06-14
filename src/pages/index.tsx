@@ -1,5 +1,4 @@
 import DefaultLayout from "@/layouts/default";
-import Aurora from "@/components/ui/Aurora";
 import { Input } from "@heroui/input";
 import { LinkIcon } from "@/components/icons";
 import LinksTable from "@/components/home/LinksTable";
@@ -59,19 +58,19 @@ function IndexPage() {
             </div>
 
             <div className="w-full max-w-2xl flex items-center gap-2">
-            <Input
-              isClearable
-              value={input}
-              onValueChange={setInput}
-              onClear={() => setInput("")}
-              placeholder="Enter your link"
-              startContent={<LinkIcon className="text-default-400" />}
-              variant="bordered"
-              className="w-full"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleAddLink();
-              }}
-            />
+              <Input
+                isClearable
+                value={input}
+                onValueChange={setInput}
+                onClear={() => setInput("")}
+                placeholder="Enter your link"
+                startContent={<LinkIcon className="text-default-400" />}
+                variant="bordered"
+                className="w-full"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleAddLink();
+                }}
+              />
               <Button
                 isIconOnly
                 aria-label="Add Link"
@@ -89,15 +88,6 @@ function IndexPage() {
           </div>
         </div>
       </FadeContent>
-      <div className="absolute inset-0 -z-10 opacity-60">
-        <div className="absolute inset-0 backdrop-blur-[40px]"></div>
-        <Aurora
-          colorStops={["#A7EFFF"]}
-          blend={0.6}
-          amplitude={0.8}
-          speed={0.5}
-        />
-      </div>
     </DefaultLayout>
   );
 }

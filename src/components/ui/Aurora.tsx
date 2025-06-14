@@ -115,6 +115,8 @@ interface AuroraProps {
   blend?: number;
   time?: number;
   speed?: number;
+  width?: number;
+  height?: number;
 }
 
 export default function Aurora(props: AuroraProps) {
@@ -122,6 +124,8 @@ export default function Aurora(props: AuroraProps) {
     colorStops = ["#00d8ff", "#7cff67", "#00d8ff"],
     amplitude = 1.0,
     blend = 0.5,
+    width: _width,
+    height: _height,
   } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
@@ -147,11 +151,11 @@ export default function Aurora(props: AuroraProps) {
 
     function resize() {
       if (!ctn) return;
-      const width = ctn.offsetWidth;
-      const height = ctn.offsetHeight;
-      renderer.setSize(width, height);
+      const w = propsRef.current.width ?? ctn.offsetWidth;
+      const h = propsRef.current.height ?? ctn.offsetHeight;
+      renderer.setSize(w, h);
       if (program) {
-        program.uniforms.uResolution.value = [width, height];
+        program.uniforms.uResolution.value = [w, h];
       }
     }
     window.addEventListener("resize", resize);
@@ -212,5 +216,21 @@ export default function Aurora(props: AuroraProps) {
     };
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="aurora-container" />;
+  return (
+    <div
+      ref={ctnDom}
+      className="aurora-container"
+      style={{
+        width: "100%",
+        height: "100%",
+        borderRadius: 24,
+        overflow: "hidden",
+        boxShadow: "0 4px 32px 0 rgba(0,0,0,0.12)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "0 auto",
+      }}
+    />
+  );
 }
