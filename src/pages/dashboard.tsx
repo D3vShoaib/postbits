@@ -12,22 +12,57 @@ export default function DashboardPage() {
   const [blend, setBlend] = useState(0.5); // max 1.5
   const [amplitude, setAmplitude] = useState(1.0);
   const [speed, setSpeed] = useState(0.5); // max 2
+  const [socialHandles, setSocialHandles] = useState([
+    "@D3vShoaib",
+    "@D3vShoaib",
+    "@D3vShoaib",
+  ]);
 
   return (
     <DefaultLayout>
       <section className="flex flex-col  gap-4">
         {/* image section */}
-        <div className="w-full h-96 md:h-[500px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px]">
-          <Aurora
-            colorStops={colorStops}
-            blend={blend}
-            amplitude={amplitude}
-            speed={speed}
-          />
-        </div>
+        <div className="relative w-full h-96 md:h-[500px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] overflow-hidden rounded-2xl">
+          {/* Aurora background */}
+          <div className="absolute inset-0 w-full h-full">
+            <Aurora
+              colorStops={colorStops}
+              blend={blend}
+              amplitude={amplitude}
+              speed={speed}
+            />
+          </div>{" "}
+          {/* Content overlay */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full p-8">
+            {/* Profile Image - taking full dimensions with margin */}
+            <div className="flex-1 w-full flex items-center justify-center mb-2">
+              <div className="w-[calc(100%-30px)] h-[calc(100%-30px)] relative">
+                <img
+                  src="https://placehold.co/500x280"
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-3xl border-4 border-white/20 shadow-2xl"
+                />
+              </div>
+            </div>
+            {/* Social Media Handles - horizontal layout */}
+            <div className="flex flex-row items-center justify-center gap-20 flex-wrap">
+              {socialHandles.map((handle, index) => (
+                <div
+                  key={index}
+                  className="bg-black/30 backdrop-blur-sm px-6 py-2 rounded-full border border-white/20"
+                >
+                  <span className="text-white font-medium text-lg">
+                    {handle}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>{" "}
         {/* image control */}
         <div className="w-full max-w-xl bg-black/80 rounded-2xl p-6 mt-2 flex flex-col gap-4 text-white">
-          <div className="flex items-center gap-6 mb-2">
+          {/* Color Controls */}
+          <div className="flex items-center gap-6">
             {[0, 1, 2].map((i) => (
               <div key={i} className="flex flex-col gap-1">
                 <input
@@ -43,6 +78,31 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
+
+          {/* Social Media Handle Controls */}
+          <div className="flex flex-col gap-3 mb-4">
+            <h3 className="text-lg font-semibold text-white/90">
+              Social Media Handles
+            </h3>
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="flex flex-col gap-1">
+                <label className="text-sm text-white/70">Handle {i + 1}</label>
+                <input
+                  type="text"
+                  value={socialHandles[i]}
+                  onChange={(e) => {
+                    const newHandles = [...socialHandles];
+                    newHandles[i] = e.target.value;
+                    setSocialHandles(newHandles);
+                  }}
+                  className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white/40"
+                  placeholder={`@handle${i + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Slider Controls */}
           <div className="flex flex-col gap-4">
             <Slider
               className="max-w-md"
