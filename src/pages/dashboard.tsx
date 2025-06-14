@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DefaultLayout from "@/layouts/default";
 
 import Aurora from "@/components/ui/Aurora";
-import { Slider, Input } from "@heroui/react";
+import { Slider, Input, Button } from "@heroui/react";
+import { Camera, Download } from "lucide-react";
+import { captureImageSection, downloadImage } from "@/utils/captureUtils";
 
 export default function DashboardPage() {
   const [colorStops, setColorStops] = useState([
@@ -13,6 +15,7 @@ export default function DashboardPage() {
   const [amplitude, setAmplitude] = useState(0.3);
   const [blend, setBlend] = useState(1);
   const [speed, setSpeed] = useState(1);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   // Data Controls state
   const [title, setTitle] = useState(
@@ -23,6 +26,31 @@ export default function DashboardPage() {
     "@twitter_username",
     "@linkedin_username",
   ]);
+
+  // Ref for the image section
+  const imageSectionRef = useRef<HTMLDivElement>(null);
+
+  // Capture function
+  const handleCapture = async () => {
+    if (!imageSectionRef.current) return;
+    
+    setIsCapturing(true);
+    try {
+      const dataURL = await captureImageSection(imageSectionRef.current, {
+        width: 1920,
+        height: 1080,
+        format: 'png',
+        quality: 1.0
+      });
+      
+      downloadImage(dataURL, `postbits-${Date.now()}`);
+    } catch (error) {
+      console.error('Failed to capture image:', error);
+      // You might want to show a toast notification here
+    } finally {
+      setIsCapturing(false);
+    }
+  };
 
   return (
     <DefaultLayout>
@@ -126,8 +154,7 @@ export default function DashboardPage() {
                   showSteps={true}
                   size="md"
                 />
-              </div>
-              {/* Data Controls Section */}
+              </div>              {/* Data Controls Section */}
               <div className="mt-8">
                 <h3 className="text-md font-semibold mb-1">Data Controls</h3>{" "}
                 {/* Title Input */}
@@ -163,10 +190,25 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
+              
+              {/* Capture Controls */}
+              <div className="mt-8">
+                <h3 className="text-md font-semibold mb-4">Export</h3>
+                <Button
+                  color="primary"
+                  variant="solid"
+                  startContent={isCapturing ? <Camera className="animate-pulse" /> : <Download />}
+                  onClick={handleCapture}
+                  isLoading={isCapturing}
+                  disabled={isCapturing}
+                  className="w-full"
+                >
+                  {isCapturing ? 'Capturing...' : 'Capture Image'}
+                </Button>
+              </div>
             </div>
-          </div>{" "}
-          {/* Image Section */}
-          <div className="flex-1 h-[720px] relative">
+          </div>{" "}          {/* Image Section */}
+          <div ref={imageSectionRef} className="flex-1 h-[720px] relative">
             {/* Aurora background */}
             <div className="absolute inset-0 w-full h-full">
               <Aurora
@@ -182,9 +224,9 @@ export default function DashboardPage() {
               <div className="w-full  flex items-center justify-center">
                 <div className="w-[740px] h-[490px] rounded-3xl overflow-hidden">
                   <img
-                    // src="https://placehold.co/600x400"
+                    src="https://placehold.co/600x400"
                     alt="Post content"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>{" "}
