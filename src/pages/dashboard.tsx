@@ -6,9 +6,9 @@ import { Slider } from "@heroui/react";
 
 export default function DashboardPage() {
   const [colorStops, setColorStops] = useState([
-    "#00d8ff",
-    "#7cff67",
-    "#00d8ff",
+    "#2c2c2c", // Dark gray
+    "#ffffff", // White
+    "#d3d3d3", // Pastel gray
   ]);
   const [amplitude, setAmplitude] = useState(0.3);
   const [blend, setBlend] = useState(1);
@@ -129,42 +129,44 @@ export default function DashboardPage() {
                 blend={blend} // 0 to 1
                 speed={speed} // 2 max
               />
-            </div>
-
-            {/* Content overlay */}
-            <div className="relative z-10 flex flex-col items-center justify-between h-full p-8 text-white">
+            </div>{" "}
+            {/* Content overlay */}{" "}
+            <div className="relative z-10 flex flex-col  h-full  p-10 text-white">
               {/* Main image/content area */}
-              <div className="w-full flex-1 flex items-center justify-center">
-                <div className="w-[600px] h-[400px] rounded-xl overflow-hidden">
+              <div className="w-full  flex items-center justify-center">
+                <div className="w-[740px] h-[490px] rounded-3xl overflow-hidden">
                   <img
-                    src="https://placehold.co/500x500"
+                    src="https://placehold.co/600x400"
                     alt="Post content"
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
-
               {/* Title text */}
-              <div className="mt-4 mb-6 text-center">
-                <h3 className="text-2xl font-bold">
-                  Lorem Ipsum Emmet Doller Sign liso into car flower play
-                </h3>
-              </div>
-
-              {/* Username/handles row */}
-              <div className="flex flex-row items-center justify-center gap-4 flex-wrap">
-                {[
-                  "@twitter_username",
-                  "@twitter_username",
-                  "@twitter_username",
-                ].map((handle, index) => (
-                  <div
-                    key={index}
-                    className="bg-black/30 backdrop-blur-sm px-6 py-2 rounded-full border border-white/20"
-                  >
-                    <span className="text-white/90 font-medium">{handle}</span>
-                  </div>
-                ))}
+              <div className="mt-4">
+                <div className="w-[740px]">
+                  <h3 className="text-2xl font-mono text-white">
+                    Lorem Ipsum Emmet Doller Sign liso into car flower play Sign
+                    liso into car flower play Sign liso into
+                  </h3>
+                </div>
+                {/* Username/handles row */}
+                <div className="flex flex-row gap-8 mt-4">
+                  {[
+                    "@twitter_username",
+                    "@twitter_username",
+                    "@twitter_username",
+                  ].map((handle, index) => (
+                    <div
+                      key={index}
+                      className="bg-black/30 px-2 py-1 rounded-xl border-4 border-white/20"
+                    >
+                      <span className="text-gray-300 text-sm font-medium">
+                        {handle}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
