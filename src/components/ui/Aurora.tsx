@@ -223,9 +223,7 @@ export default function Aurora(props: AuroraProps) {
       style={{
         width: "100%",
         height: "100%",
-        borderRadius: 24,
         overflow: "hidden",
-        boxShadow: "0 4px 32px 0 rgba(0,0,0,0.12)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
