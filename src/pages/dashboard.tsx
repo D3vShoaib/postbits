@@ -2,7 +2,7 @@ import { useState } from "react";
 import DefaultLayout from "@/layouts/default";
 
 import Aurora from "@/components/ui/Aurora";
-import { Slider } from "@heroui/react";
+import { Slider, Input } from "@heroui/react";
 
 export default function DashboardPage() {
   const [colorStops, setColorStops] = useState([
@@ -13,6 +13,16 @@ export default function DashboardPage() {
   const [amplitude, setAmplitude] = useState(0.3);
   const [blend, setBlend] = useState(1);
   const [speed, setSpeed] = useState(1);
+
+  // Data Controls state
+  const [title, setTitle] = useState(
+    "Lorem Ipsum Emmet Doller Sign flower play liso into car flower"
+  );
+  const [socials, setSocials] = useState([
+    "@github_username",
+    "@twitter_username",
+    "@linkedin_username",
+  ]);
 
   return (
     <DefaultLayout>
@@ -117,6 +127,42 @@ export default function DashboardPage() {
                   size="md"
                 />
               </div>
+              {/* Data Controls Section */}
+              <div className="mt-8">
+                <h3 className="text-md font-semibold mb-1">Data Controls</h3>{" "}
+                {/* Title Input */}
+                <div className="space-y-2">
+                  <Input
+                    isClearable
+                    variant="bordered"
+                    label="Title"
+                    placeholder="Enter your title here..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                {/* Socials Input */}
+                <div className="mt-6">
+                  <div className="space-y-2">
+                    {socials.map((social, index) => (
+                      <Input
+                        isClearable
+                        variant="bordered"
+                        key={index}
+                        label={`Social Handle ${index + 1}`}
+                        placeholder={`@username${index + 1}`}
+                        type="text"
+                        value={social}
+                        onChange={(e) => {
+                          const newSocials = [...socials];
+                          newSocials[index] = e.target.value;
+                          setSocials(newSocials);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>{" "}
           {/* Image Section */}
@@ -136,32 +182,27 @@ export default function DashboardPage() {
               <div className="w-full  flex items-center justify-center">
                 <div className="w-[740px] h-[490px] rounded-3xl overflow-hidden">
                   <img
-                    src="https://placehold.co/600x400"
+                    // src="https://placehold.co/600x400"
                     alt="Post content"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
-              </div>
+              </div>{" "}
               {/* Title text */}
-              <div className="mt-4">
+              <div className="mt-6">
                 <div className="w-[740px]">
-                  <h3 className="text-2xl font-mono text-white">
-                    Lorem Ipsum Emmet Doller Sign liso into car flower play Sign
-                    liso into car flower play Sign liso into
+                  <h3 className="text-3xl font-mono text-white leading-tight">
+                    {title}
                   </h3>
                 </div>
                 {/* Username/handles row */}
-                <div className="flex flex-row gap-8 mt-4">
-                  {[
-                    "@twitter_username",
-                    "@twitter_username",
-                    "@twitter_username",
-                  ].map((handle, index) => (
+                <div className="flex flex-row gap-6 mt-6">
+                  {socials.map((handle, index) => (
                     <div
                       key={index}
-                      className="bg-black/30 px-2 py-1 rounded-xl border-4 border-white/20"
+                      className="bg-black/30 px-4 py-2 rounded-xl border-4 border-white/20"
                     >
-                      <span className="text-gray-300 text-sm font-medium">
+                      <span className="text-gray-300 text-base font-medium">
                         {handle}
                       </span>
                     </div>
