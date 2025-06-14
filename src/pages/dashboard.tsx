@@ -33,19 +33,19 @@ export default function DashboardPage() {
   // Capture function
   const handleCapture = async () => {
     if (!imageSectionRef.current) return;
-    
+
     setIsCapturing(true);
     try {
       const dataURL = await captureImageSection(imageSectionRef.current, {
-        width: 1920,
+        width: 1080,
         height: 1080,
-        format: 'png',
-        quality: 1.0
+        format: "png",
+        quality: 1.0,
       });
-      
+
       downloadImage(dataURL, `postbits-${Date.now()}`);
     } catch (error) {
-      console.error('Failed to capture image:', error);
+      console.error("Failed to capture image:", error);
       // You might want to show a toast notification here
     } finally {
       setIsCapturing(false);
@@ -107,7 +107,6 @@ export default function DashboardPage() {
                   ))}
                 </div>
               </div>
-
               {/* Aurora Control Sliders */}
               <div className="space-y-4">
                 <Slider
@@ -154,7 +153,8 @@ export default function DashboardPage() {
                   showSteps={true}
                   size="md"
                 />
-              </div>              {/* Data Controls Section */}
+              </div>{" "}
+              {/* Data Controls Section */}
               <div className="mt-8">
                 <h3 className="text-md font-semibold mb-1">Data Controls</h3>{" "}
                 {/* Title Input */}
@@ -190,24 +190,30 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              
               {/* Capture Controls */}
               <div className="mt-8">
                 <h3 className="text-md font-semibold mb-4">Export</h3>
                 <Button
-                  color="primary"
-                  variant="solid"
-                  startContent={isCapturing ? <Camera className="animate-pulse" /> : <Download />}
+                  color="default"
+                  variant="shadow"
+                  startContent={
+                    isCapturing ? (
+                      <Camera className="animate-pulse" />
+                    ) : (
+                      <Download />
+                    )
+                  }
                   onClick={handleCapture}
                   isLoading={isCapturing}
                   disabled={isCapturing}
                   className="w-full"
                 >
-                  {isCapturing ? 'Capturing...' : 'Capture Image'}
+                  {isCapturing ? "Capturing..." : "Capture Image"}
                 </Button>
               </div>
             </div>
-          </div>{" "}          {/* Image Section */}
+          </div>{" "}
+          {/* Image Section */}
           <div ref={imageSectionRef} className="flex-1 h-[720px] relative">
             {/* Aurora background */}
             <div className="absolute inset-0 w-full h-full">
