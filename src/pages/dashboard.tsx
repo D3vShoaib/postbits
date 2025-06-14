@@ -16,10 +16,10 @@ export default function DashboardPage() {
 
   return (
     <DefaultLayout>
-      <section className="border">
+      <section>
         <div className="flex flex-row">
           {/* ImageControl Center */}
-          <div className="w-1/3 p-4 border-r">
+          <div className="w-1/3 p-4 border-r-3 border-opacity-50 border-gray-600 border-dashed">
             <h2 className="text-xl font-bold mb-4">Image Controls</h2>
             <div className="space-y-6">
               {/* Color Pickers */}
@@ -120,7 +120,7 @@ export default function DashboardPage() {
             </div>
           </div>{" "}
           {/* Image Section */}
-          <div className="flex-1 h-[720px] border relative">
+          <div className="flex-1 h-[720px] relative">
             {/* Aurora background */}
             <div className="absolute inset-0 w-full h-full">
               <Aurora
